@@ -53,7 +53,7 @@ async def on_raw_reaction_add(payload):
         
         # Open JSON containing data of all pinned messages
         try:
-            with open("data/" + board_channel.name + ".json", "r") as f:
+            with open(f"data/{board_channel.name}.json", "r") as f:
                 pinned_messages = json.load(f)
         except FileNotFoundError:
             pinned_messages = {}
@@ -75,13 +75,14 @@ async def on_raw_reaction_add(payload):
             pin.set_author(name=message.author.name, icon_url=message.author.avatar_url)
             # Date time for footer
             current_time = datetime.now()
-            footer_msg = str(message.id) + "  •  " + current_time.strftime("%d/%m/%Y %H:%M:%S")
+            time_str = current_time.strftime("%d/%m/%Y %H:%M:%S")
+            footer_msg = f"{message.id}  •  {time_str}"
             pin.set_footer(text=footer_msg)
             # Jump! hyperlink
-            message_link = "[Jump!](https://discord.com/channels/" + str(message.guild.id) + "/" + str(input_channel.id) + "/" + str(message.id) + ")"
+            message_link = f"[Jump!](https://discord.com/channels/{message.guild.id}/{input_channel.id}/{message.id})"
             pin.add_field(name="Source", value=message_link, inline=False)
              
-            pin_msg = await board_channel.send(content=str(payload.emoji) + " **1** <#" + str(input_channel.id) + ">", embed=pin)
+            pin_msg = await board_channel.send(content=f"{payload.emoji} **1** <#{input_channel.id}>", embed=pin)
 
             # Save message info
             with open("data/" + board_channel.name + ".json","w") as f:
@@ -89,7 +90,7 @@ async def on_raw_reaction_add(payload):
         # Update react count in message if not first react
         elif react_count > 1:
             pin_msg = await board_channel.fetch_message(int(pinned_messages[str(message.id)]))
-            await pin_msg.edit(content=str(payload.emoji) + " **" + str(reaction.count) + "**")
+            await pin_msg.edit(content=f"{payload.emoji} **{reaction.count}**")
 
 
 
