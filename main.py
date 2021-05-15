@@ -26,7 +26,10 @@ async def create_board(ctx, emote, channel_id):
     if emote == "😂":
        await ctx.send("No.") 
        return
-    board_dict = load_boards()
+    try:
+        board_dict = load_boards()
+    except FileNotFoundError:
+        board_dict = {}
     board_dict[emote] = channel_id
     save_boards(board_dict)
     await ctx.send("Board successfuly set")
@@ -83,7 +86,9 @@ async def on_raw_reaction_add(payload):
         # Update react count in message if not first react
         elif react_count > 1:
             pin_msg = await board_channel.fetch_message(int(pinned_messages[str(message.id)]))
-            await pin_msg.edit(content=payload.emoji.name + " **" + str(reaction.count) + "**")
+            await pin_msg.edit(content=str(payload.emoji) + " **" + str(reaction.count) + "**")
+
+
 
 
 bot.run("")
