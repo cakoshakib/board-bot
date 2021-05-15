@@ -28,14 +28,14 @@ async def create_board(ctx, emote, channel_id):
     """
     if emote == "😂":
        await ctx.send("No.") 
-       return
-    try:
-        board_dict = load_boards()
-    except FileNotFoundError:
-        board_dict = {}
-    board_dict[emote] = channel_id
-    save_boards(board_dict)
-    await ctx.send("Board successfuly set")
+    else:
+        try:
+            board_dict = load_boards()
+        except FileNotFoundError:
+            board_dict = {}
+        board_dict[emote] = channel_id
+        save_boards(board_dict)
+        await ctx.send("Board successfuly set")
 
 
 @bot.event
