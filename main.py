@@ -6,12 +6,12 @@ import logging
 
 bot = Bot(command_prefix=".")
 
-def save_boards(board_dict):
+def save_boards(board_dict: dict):
     with open("data/boards.json", "w") as f:
         logging.debug("Dumped board")
         json.dump(board_dict, f)
 
-def load_boards():
+def load_boards() -> dict:
     with open("data/boards.json", "r") as f:
         logging.debug("Read board")
         return json.load(f)
