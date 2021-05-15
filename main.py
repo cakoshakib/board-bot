@@ -2,20 +2,23 @@ import discord
 from discord.ext.commands import Bot
 import json
 from datetime import datetime
+import logging
 
 bot = Bot(command_prefix=".")
 
 def save_boards(board_dict):
     with open("data/boards.json", "w") as f:
+        logging.debug("Dumped board")
         json.dump(board_dict, f)
 
 def load_boards():
     with open("data/boards.json", "r") as f:
+        logging.debug("Read board")
         return json.load(f)
 
 @bot.event
 async def on_ready():
-    print("Bot is ready")
+    logging.info("Bot is Ready")
     await bot.change_presence(activity=discord.Streaming(name="Gaming", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
 
 @bot.command()
@@ -54,7 +57,7 @@ async def on_raw_reaction_add(payload):
                 pinned_messages = json.load(f)
         except FileNotFoundError:
             pinned_messages = {}
-            print("Board Channel JSON not yet created")
+            logging.warn("Board Channel JSON not yet created")
 
         # Determine number of reactions
         react_count = 0
