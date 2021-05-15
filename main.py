@@ -16,7 +16,7 @@ def load_boards():
 @bot.event
 async def on_ready():
     print("Bot is ready")
-    await bot.change_presence(activity=discord.Streaming(name="Gaming", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO"))
+    await bot.change_presence(activity=discord.Streaming(name="Gaming", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
 
 @bot.command()
 async def create_board(ctx, emote, channel_id):
