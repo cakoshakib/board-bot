@@ -74,6 +74,10 @@ async def on_raw_reaction_add(payload):
                     color=0x66FF99,
             )
             pin.set_author(name=message.author.name, icon_url=message.author.avatar_url)
+            try:
+                pin.set_image(url=message.attachments[0].url)
+            except IndexError:
+                pass
             # Date time for footer
             current_time = datetime.now()
             time_str = current_time.strftime("%d/%m/%Y %H:%M:%S")
@@ -91,7 +95,7 @@ async def on_raw_reaction_add(payload):
         # Update react count in message if not first react
         elif react_count > 1:
             pin_msg = await board_channel.fetch_message(int(pinned_messages[str(message.id)]))
-            await pin_msg.edit(content=f"{payload.emoji} **{reaction.count}**")
+            await pin_msg.edit(content=f"{payload.emoji} **{reaction.count}** <#{input_channel.id}>")
 
 
 
