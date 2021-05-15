@@ -3,6 +3,7 @@ from discord.ext.commands import Bot
 import json
 from datetime import datetime
 import logging
+from os import environ
 
 bot = Bot(command_prefix=".")
 
@@ -95,5 +96,5 @@ async def on_raw_reaction_add(payload):
 
 
 
-bot.run("")
+bot.run(environ["DISCORD_API_TOKEN"])
 
