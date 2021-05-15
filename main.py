@@ -35,7 +35,7 @@ async def create_board(ctx, emote, channel_id):
             board_dict = {}
         board_dict[emote] = channel_id
         save_boards(board_dict)
-        await ctx.send("Board successfuly set")
+        await ctx.send("Board successfully set")
 
 
 @bot.event
