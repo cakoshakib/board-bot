@@ -1,9 +1,9 @@
 import discord
-from discord.ext import commands
+from discord.ext.commands import Bot
 import json
 from datetime import datetime
 
-bot = commands.Bot(command_prefix=".")
+bot = Bot(command_prefix=".")
 
 def save_boards(board_dict):
     with open("data/boards.json", "w") as f:
